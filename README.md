@@ -6,7 +6,9 @@
 
 ## Todos:
 
-- [ ] **Build typescript nodejs skeleton**
+- [x] Build typescript nodejs skeleton
+
+- [ ] **Build folder structure**
 
 - [ ] Implement MongoDB and Mongoose
 

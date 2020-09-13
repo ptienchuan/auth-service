@@ -1,0 +1,34 @@
+{
+  "name": "expo-notification-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "lint": "npx eslint ./src/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptienchuan/nodejs-expo-notification-backend.git"
+  },
+  "author": "ptienchuan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ptienchuan/nodejs-expo-notification-backend/issues"
+  },
+  "homepage": "https://github.com/ptienchuan/nodejs-expo-notification-backend#readme",
+  "dependencies": {
+    "@types/express": "^4.17.8",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.1.0",
+    "@typescript-eslint/parser": "^4.1.0",
+    "eslint": "^7.9.0",
+    "nodemon": "^2.0.4",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  }
+}

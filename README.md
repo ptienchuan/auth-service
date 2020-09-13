@@ -3,4 +3,4 @@
 ## Mobile app:
 - React Native mobile app: https://github.com/ptienchuan/react-native-expo-notification
 
-## TODOs:
+## Todos:

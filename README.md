@@ -6,7 +6,10 @@
 
 ## Todos:
 
-- [ ] Build typescript nodejs skeleton
+- [ ] **Build typescript nodejs skeleton**
+
 - [ ] Implement MongoDB and Mongoose
+
 - [ ] Create an endpoint to fetch notifications
+
 - [ ] Create an endpoint to push notification

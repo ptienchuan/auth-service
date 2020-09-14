@@ -9,7 +9,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "import"],
   rules: {
     semi: ["error", "always"],
     quotes: ["error", "double"],
@@ -17,6 +17,7 @@ module.exports = {
     "no-useless-concat": ["error"],
     camelcase: ["error"],
     "no-duplicate-imports": ["error"],
-    "sort-imports": ["error"],
+    "import/newline-after-import": ["error"],
+    "import/first": ["error"],
   },
 };

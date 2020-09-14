@@ -8,9 +8,9 @@
 
 - [x] Build typescript nodejs skeleton
 
-- [ ] **Build folder structure**
+- [x] Build folder structure
 
-- [ ] Implement MongoDB and Mongoose
+- [ ] **Implement MongoDB and Mongoose**
 
 - [ ] Create an endpoint to fetch notifications
 

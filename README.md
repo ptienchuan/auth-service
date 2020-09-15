@@ -12,6 +12,12 @@
 
 - [ ] **Implement MongoDB and Mongoose**
 
+  - [x] Install docker, setup environment
+  - [x] Install mongoose, create function connectDB
+  - [ ] Create model schemas
+
+- [ ] **Add path aliaser**
+
 - [ ] Create an endpoint to fetch notifications
 
 - [ ] Create an endpoint to push notification

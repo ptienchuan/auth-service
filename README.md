@@ -10,7 +10,7 @@
 
 - [x] Build folder structure
 
-- [ ] **Implement MongoDB and Mongoose**
+- [ ] Implement MongoDB and Mongoose
 
   - [x] Install docker, setup environment
   - [x] Install mongoose, create function connectDB

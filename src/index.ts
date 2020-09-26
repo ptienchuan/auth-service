@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import { connectDBAsync } from "./configs/database";
-import app from "./app";
+import { connectDBAsync } from "@/configs/database";
+import app from "@/app";
 
 dotenv.config();
 connectDBAsync();

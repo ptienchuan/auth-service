@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf ./dist && tsc",
-    "start": "node -r ./tsconfig-paths-prod.js ./dist/index.js",
+    "start": "node -r ./config/tsconfig-paths-prod.js ./dist/index.js",
     "dev": "nodemon",
-    "lint": "eslint ./src/"
+    "lint": "eslint ./src/",
+    "test": "jest --detectOpenHandles --forceExit --no-cache"
   },
   "repository": {
     "type": "git",
@@ -30,10 +31,12 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
     "eslint": "^7.9.0",
     "eslint-plugin-import": "^2.22.0",
+    "jest": "^26.4.2",
     "nodemon": "^2.0.4",
     "ts-node": "^9.0.0",
     "tsconfig-paths": "^3.9.0",

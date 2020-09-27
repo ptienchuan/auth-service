@@ -20,8 +20,10 @@
   },
   "homepage": "https://github.com/ptienchuan/nodejs-expo-notification-backend#readme",
   "dependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.8",
     "@types/mongoose": "^5.7.36",
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.10.5",

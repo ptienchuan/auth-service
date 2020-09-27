@@ -12,7 +12,10 @@ const register = async ({
   password,
   expoToken,
 }: IRegisterUserPatameter): Promise<IUser> => {
-  const hashedPassword = await bcrypt.hash(password, process.env.SALT_ROUNDS);
+  const hashedPassword = await bcrypt.hash(
+    password,
+    parseInt(process.env.SALT_ROUNDS)
+  );
   const user = new User({ name, password: hashedPassword, expoToken } as IUser);
   const newUser = await user.save();
   return newUser;

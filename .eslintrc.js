@@ -19,5 +19,6 @@ module.exports = {
     "no-duplicate-imports": ["error"],
     "import/newline-after-import": ["error"],
     "import/first": ["error"],
+    "@typescript-eslint/no-explicit-any": ["off"],
   },
 };

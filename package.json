@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "rimraf ./dist && tsc",
+    "start": "node -r ./tsconfig-paths.js ./dist/index.js",
     "dev": "nodemon",
-    "lint": "npx eslint ./src/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint ./src/",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit --no-cache"
   },
   "repository": {
     "type": "git",
@@ -19,19 +21,29 @@
   },
   "homepage": "https://github.com/ptienchuan/nodejs-expo-notification-backend#readme",
   "dependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.8",
     "@types/mongoose": "^5.7.36",
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.10.5"
+    "mongoose": "^5.10.5",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@types/faker": "^5.1.2",
+    "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.9.0",
     "eslint-plugin-import": "^2.22.0",
+    "faker": "^5.1.0",
+    "jest": "^26.4.2",
     "nodemon": "^2.0.4",
+    "ts-jest": "^26.4.0",
     "ts-node": "^9.0.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.0.2"
   }
 }

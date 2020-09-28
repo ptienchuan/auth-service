@@ -1,6 +1,6 @@
 import { Document, Schema, model } from "mongoose";
 
-interface IUser extends Document {
+interface User extends Document {
   name: string;
   password: string;
   expoToken?: string;
@@ -34,5 +34,5 @@ const schema = new Schema({
   ],
 });
 
-export { IUser };
-export default model<IUser>("User", schema);
+export { User };
+export default model<User>("User", schema);

@@ -1,17 +1,17 @@
 import faker from "faker";
-import { register, IRegisterUserPatameter } from "@/repositories/user";
-import User from "@/models/user";
+import { register, RegisterUserPatameter } from "@/repositories/user";
+import UserModel from "@/models/user";
 
 describe("User repository: ", () => {
   test("register() - Should succeed", async () => {
-    const userParameter: IRegisterUserPatameter = {
+    const userParameter: RegisterUserPatameter = {
       name: "  user_Name  ",
       password: faker.random.words(5),
       expoToken: faker.random.word(),
     };
     const createdUser = await register(userParameter);
 
-    const user = await User.findById(createdUser._id);
+    const user = await UserModel.findById(createdUser._id);
     expect(user).toMatchObject({
       name: "user_name",
       expoToken: userParameter.expoToken,

@@ -1,5 +1,6 @@
 # Nodejs back-end of demo mobile app expo-notification
 [![CI Develop](https://github.com/ptienchuan/expo-notification-backend/workflows/CI%20Develop/badge.svg?branch=develop)](https://github.com/ptienchuan/expo-notification-backend/actions?query=workflow%3A%22CI+Develop%22)
+![CI Develop](https://github.com/ptienchuan/expo-notification-backend/workflows/CI%20Develop/badge.svg?branch=develop&event=pull_request)
 
 ## Mobile app:
 

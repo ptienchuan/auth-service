@@ -1,4 +1,5 @@
 import { Document, Schema, model } from "mongoose";
+import bcrypt from "bcrypt";
 
 interface User extends Document {
   name: string;
@@ -32,6 +33,15 @@ const schema = new Schema({
       },
     },
   ],
+});
+
+schema.pre("save", async function () {
+  const user = this as User;
+  user.password = user.isModified("password")
+    ? await bcrypt.hash(user.password, parseInt(process.env.SALT_ROUNDS))
+    : user.password;
+
+  return user;
 });
 
 export { User };

@@ -12,17 +12,26 @@ const register = async ({
   password,
   expoToken,
 }: RegisterUserPatameter): Promise<User> => {
-  const hashedPassword = await bcrypt.hash(
-    password,
-    parseInt(process.env.SALT_ROUNDS)
-  );
   const user = new UserModel({
     name,
-    password: hashedPassword,
+    password,
     expoToken,
   } as User);
   const newUser = await user.save();
+
   return newUser;
 };
 
-export { register, RegisterUserPatameter };
+const findByCredentials = async (
+  name: string,
+  password: string
+): Promise<User | undefined> => {
+  const user = await UserModel.findOne({ name });
+  const validCredentials =
+    user && (await bcrypt.compare(password, user.password));
+
+  return validCredentials ? user : undefined;
+};
+
+export { RegisterUserPatameter };
+export default { register, findByCredentials };

@@ -1,12 +1,7 @@
 import mongoose from "mongoose";
+import { log } from "@/libs/utilities";
 
 const isTestEnv = process.env.NODE_ENV === "test";
-
-const log = (message: string, arg?: any): void => {
-  if (!isTestEnv) {
-    arg ? console.log(message, arg) : console.log(message);
-  }
-};
 
 const connectDB = async (): Promise<typeof mongoose> => {
   const dbName = isTestEnv

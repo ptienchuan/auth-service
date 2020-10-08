@@ -14,6 +14,7 @@ const errorHandler = (
     error instanceof Error
       ? error.getErrorDetail()
       : new Error().getErrorDetail();
+
   res.status(errorDetail.status).send(errorDetail);
 };
 

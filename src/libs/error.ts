@@ -11,9 +11,9 @@ class Error {
   private message: string;
   private detail: [];
 
-  constructor(status: HTTP_STATUS = HTTP_STATUS.INTERNAL_SERVER_ERROR) {
-    this.status = status;
-    switch (status) {
+  constructor(status?: HTTP_STATUS) {
+    this.status = status || HTTP_STATUS.INTERNAL_SERVER_ERROR;
+    switch (this.status) {
       case HTTP_STATUS.NOT_FOUND:
         this.message = HTTP_ERROR_MESSAGE.NOT_FOUND;
         break;

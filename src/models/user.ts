@@ -36,8 +36,7 @@ const schema = new Schema({
 });
 
 schema.methods.toJSON = function () {
-  let user = this as User;
-  user = user.toObject();
+  const user = this.toObject() as User;
 
   delete user._id;
   delete user.__v;

@@ -1,12 +1,12 @@
 enum HTTP_STATUS {
   CREATED = 201,
-  INTERNAL_SERVER_ERROR = 500,
   NOT_FOUND = 404,
+  INTERNAL_SERVER_ERROR = 500,
 }
 
 enum HTTP_ERROR_MESSAGE {
-  INTERNAL_SERVER_ERROR = "Internal server error",
   NOT_FOUND = "Not found",
+  INTERNAL_SERVER_ERROR = "Internal server error",
 }
 
 export { HTTP_STATUS, HTTP_ERROR_MESSAGE };

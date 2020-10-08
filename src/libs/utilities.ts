@@ -1,11 +1,11 @@
 const extractObject = <T, K extends keyof T>(
-  resource: T,
+  object: T,
   properties: K[]
 ): Pick<T, K> => {
   const result = {} as Pick<T, K>;
   properties.forEach((property) => {
-    if (property in resource) {
-      result[property] = resource[property];
+    if (property in object) {
+      result[property] = object[property];
     }
   });
 
@@ -19,4 +19,4 @@ const log = (message: string, meta?: any): void => {
   }
 };
 
-export { log, extractObject };
+export { extractObject, log };

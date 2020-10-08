@@ -7,7 +7,7 @@ describe("User repository: ", () => {
   const rawPassword = faker.random.words(2);
 
   beforeEach(async () => {
-    await UserModel.remove({});
+    await UserModel.deleteMany({});
     userFixture = await new UserModel({
       name: faker.random.word(),
       password: rawPassword,
@@ -39,7 +39,7 @@ describe("User repository: ", () => {
 
     expect(user).toMatchObject({
       _id: userFixture._id,
-      name: userFixture.name,
+      name: userFixture.name.trim().toLowerCase(),
       expoToken: "",
     });
     expect(user.authTokens).toHaveLength(0);

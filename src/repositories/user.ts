@@ -4,7 +4,7 @@ import UserModel, { User } from "@/models/user";
 interface RegisterUserPatameter {
   name: string;
   password: string;
-  expoToken: string;
+  expoToken?: string;
 }
 
 const register = async ({

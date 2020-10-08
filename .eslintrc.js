@@ -20,5 +20,6 @@ module.exports = {
     "import/newline-after-import": ["error"],
     "import/first": ["error"],
     "@typescript-eslint/no-explicit-any": ["off"],
+    "@typescript-eslint/explicit-module-boundary-types": ["off"],
   },
 };

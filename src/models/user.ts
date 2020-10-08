@@ -35,6 +35,17 @@ const schema = new Schema({
   ],
 });
 
+schema.methods.toJSON = function () {
+  const user = this.toObject() as User;
+
+  delete user._id;
+  delete user.__v;
+  delete user.password;
+  delete user.authTokens;
+
+  return user;
+};
+
 schema.pre("save", async function () {
   const user = this as User;
   user.password = user.isModified("password")

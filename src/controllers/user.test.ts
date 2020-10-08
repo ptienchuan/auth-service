@@ -1,7 +1,7 @@
 import httpMocks from "node-mocks-http";
 import faker from "faker";
 import userController from "@/controllers/user";
-import UserModel from "@/models/user";
+import UserModel, { User } from "@/models/user";
 
 describe("User Controller", () => {
   const res = httpMocks.createResponse();
@@ -39,5 +39,21 @@ describe("User Controller", () => {
       body: { password: faker.random.word() },
     });
     await expect(userController.regist(req, res)).rejects.toThrowError();
+  });
+
+  test("Action login(): Should succeed", async () => {
+    const userParameter = {
+      name: faker.random.word(),
+      password: faker.random.words(2),
+    } as User;
+    const { _id } = await new UserModel(userParameter).save();
+
+    const req = httpMocks.createRequest({ body: userParameter });
+    await userController.login(req, res);
+
+    const { authTokens } = await UserModel.findById(_id);
+    expect(authTokens).toHaveLength(1);
+    expect(typeof authTokens[0].token).toBe("string");
+    expect(authTokens[0].token).not.toBe("");
   });
 });

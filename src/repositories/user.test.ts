@@ -64,4 +64,16 @@ describe("User repository: ", () => {
     );
     expect(user).toBeUndefined();
   });
+
+  test("generateTokenFor() - Should generate success", async () => {
+    const token = await userRepo.generateTokenFor(userFixture);
+    const { authTokens } = await UserModel.findById(userFixture._id);
+
+    // assert it've been generated
+    expect(typeof token).toBe("string");
+    expect(token).not.toBe("");
+    // assert it've been saved in user
+    expect(authTokens).toHaveLength(1);
+    expect(authTokens[0].token).toBe(token);
+  });
 });

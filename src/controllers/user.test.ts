@@ -30,7 +30,7 @@ describe("User Controller", () => {
       name: body.name.trim().toLowerCase(),
       expoToken: body.expoToken,
     });
-    expect(createdUser.authTokens).toHaveLength(0);
+    expect(createdUser.authTokens).toHaveLength(1);
     expect(createdUser.password).not.toEqual(body.password);
   });
 

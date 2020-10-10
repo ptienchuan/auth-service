@@ -17,10 +17,12 @@ describe("POST /users/", () => {
       .send({ ...parameters, expoToken })
       .expect(HTTP_STATUS.CREATED);
 
-    expect(body).toEqual({
+    expect(body.user).toEqual({
       name: parameters.name.trim().toLowerCase(),
       expoToken: expoToken,
     });
+    expect(body).toHaveProperty("token");
+    expect(body.token).not.toBe("");
   });
 
   test("201 - Should succeed - With empty expo token", async () => {
@@ -29,10 +31,12 @@ describe("POST /users/", () => {
       .send(parameters)
       .expect(HTTP_STATUS.CREATED);
 
-    expect(body).toEqual({
+    expect(body.user).toEqual({
       name: parameters.name.trim().toLowerCase(),
       expoToken: "",
     });
+    expect(body).toHaveProperty("token");
+    expect(body.token).not.toBe("");
   });
 
   test("500 - Should failed", async () => {

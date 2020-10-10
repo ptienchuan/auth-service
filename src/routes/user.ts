@@ -11,4 +11,15 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
+router.post(
+  "/login",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      return await userController.login(req, res);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
 export default router;

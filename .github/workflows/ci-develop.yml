@@ -28,3 +28,4 @@ jobs:
           MONGO_URI: "mongodb://mongo:27017"
           DB_NAME: "expo-notification"
           SALT_ROUNDS: 1
+          JWT_PRIVATE_KEY: "jwt_private_key"

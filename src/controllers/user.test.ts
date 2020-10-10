@@ -1,13 +1,19 @@
 import httpMocks from "node-mocks-http";
 import faker from "faker";
 import userController from "@/controllers/user";
-import UserModel from "@/models/user";
+import UserModel, { User } from "@/models/user";
 
 describe("User Controller", () => {
+  let userFixture: User;
   const res = httpMocks.createResponse();
+  const userFixtureParameter = {
+    name: faker.random.word(),
+    password: faker.random.words(2),
+  } as User;
 
   beforeEach(async () => {
     await UserModel.deleteMany({});
+    userFixture = await new UserModel(userFixtureParameter).save();
   });
 
   test("Action regist(): Should succeed", async () => {
@@ -39,5 +45,38 @@ describe("User Controller", () => {
       body: { password: faker.random.word() },
     });
     await expect(userController.regist(req, res)).rejects.toThrowError();
+  });
+
+  test("Action login(): Should succeed", async () => {
+    const req = httpMocks.createRequest({
+      body: {
+        name: userFixtureParameter.name,
+        password: userFixtureParameter.password,
+      },
+    });
+    await userController.login(req, res);
+
+    const { authTokens } = await UserModel.findById(userFixture._id);
+    expect(authTokens).toHaveLength(1);
+    expect(typeof authTokens[0].token).toBe("string");
+    expect(authTokens[0].token).not.toBe("");
+  });
+
+  test.only("Action login(): Should failed", async () => {
+    let req = httpMocks.createRequest({
+      body: {
+        name: `${userFixtureParameter.name}_diff`,
+        password: userFixtureParameter.password,
+      },
+    });
+    await expect(userController.login(req, res)).rejects.toThrowError();
+
+    req = httpMocks.createRequest({
+      body: {
+        name: userFixtureParameter.name,
+        password: `${userFixtureParameter.password}_diff`,
+      },
+    });
+    await expect(userController.login(req, res)).rejects.toThrowError();
   });
 });

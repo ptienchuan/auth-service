@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import UserModel, { User } from "@/models/user";
 
 interface RegisterUserPatameter {
@@ -33,5 +34,17 @@ const findByCredentials = async (
   return validCredentials ? user : undefined;
 };
 
+const generateTokenFor = async (user: User): Promise<string> => {
+  const token = jwt.sign(
+    { _id: user._id, name: user.name },
+    process.env.JWT_PRIVATE_KEY,
+    { expiresIn: "24h" }
+  );
+  user.authTokens = user.authTokens.concat({ token });
+  await user.save();
+
+  return token;
+};
+
 export { RegisterUserPatameter };
-export default { register, findByCredentials };
+export default { register, findByCredentials, generateTokenFor };

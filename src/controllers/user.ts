@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import userRepo, { RegisterUserPatameter } from "@/repositories/user";
+import ErrorResponse from "@/libs/error-response";
 import { extractObject } from "@/libs/utilities";
 import { HTTP_STATUS } from "@/constants";
 
@@ -14,4 +15,17 @@ const regist = async (req: Request, res: Response): Promise<Response> => {
   return res.status(HTTP_STATUS.CREATED).send(user);
 };
 
-export default { regist };
+const login = async (req: Request, res: Response): Promise<Response> => {
+  let token;
+  const { name, password } = req.body;
+  const logedInUser = await userRepo.findByCredentials(name, password);
+  if (logedInUser) {
+    token = await userRepo.generateTokenFor(logedInUser);
+  } else {
+    throw new ErrorResponse(HTTP_STATUS.NOT_FOUND);
+  }
+
+  return res.status(HTTP_STATUS.OK).send({ user: logedInUser, token });
+};
+
+export default { regist, login };

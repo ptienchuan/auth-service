@@ -6,12 +6,13 @@ interface ErrorDetail {
   detail: [];
 }
 
-class Error {
-  private status: HTTP_STATUS;
-  private message: string;
-  private detail: [];
+class ErrorResponse extends Error {
+  status: HTTP_STATUS;
+  message: string;
+  detail: [];
 
   constructor(status?: HTTP_STATUS) {
+    super();
     this.status = status || HTTP_STATUS.INTERNAL_SERVER_ERROR;
     switch (this.status) {
       case HTTP_STATUS.NOT_FOUND:
@@ -35,4 +36,4 @@ class Error {
   }
 }
 
-export default Error;
+export default ErrorResponse;

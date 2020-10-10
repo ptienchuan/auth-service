@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, Response, NextFunction } from "express";
-import Error from "@/libs/error";
+import ErrorResponse from "@/libs/error-response";
 import { log } from "@/libs/utilities";
 
 const errorHandler = (
@@ -11,9 +11,9 @@ const errorHandler = (
 ): void => {
   log(error);
   const errorDetail =
-    error instanceof Error
+    error instanceof ErrorResponse
       ? error.getErrorDetail()
-      : new Error().getErrorDetail();
+      : new ErrorResponse().getErrorDetail();
 
   res.status(errorDetail.status).send(errorDetail);
 };

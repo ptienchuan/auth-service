@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import userRepo, { RegisterUserPatameter } from "@/repositories/user";
-import Error from "@/libs/error";
+import ErrorResponse from "@/libs/error-response";
 import { extractObject } from "@/libs/utilities";
 import { HTTP_STATUS } from "@/constants";
 
@@ -22,7 +22,7 @@ const login = async (req: Request, res: Response): Promise<Response> => {
   if (logedInUser) {
     token = await userRepo.generateTokenFor(logedInUser);
   } else {
-    throw new Error(HTTP_STATUS.NOT_FOUND);
+    throw new ErrorResponse(HTTP_STATUS.NOT_FOUND);
   }
 
   return res.status(HTTP_STATUS.OK).send({ user: logedInUser, token });

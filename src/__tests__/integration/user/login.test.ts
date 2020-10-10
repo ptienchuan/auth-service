@@ -10,7 +10,7 @@ describe("POST /users/login", () => {
     password: faker.random.words(2),
   } as User;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     await new UserModel(userParameter).save();
   });
 
@@ -34,7 +34,7 @@ describe("POST /users/login", () => {
       .send({ ...userParameter, password: "123" })
       .expect(HTTP_STATUS.NOT_FOUND);
 
-    expect(body).toMatchObject({
+    expect(body).toEqual({
       status: HTTP_STATUS.NOT_FOUND,
       message: HTTP_ERROR_MESSAGE.NOT_FOUND,
       detail: [],
@@ -47,7 +47,7 @@ describe("POST /users/login", () => {
       .send({ ...userParameter, name: "123" })
       .expect(HTTP_STATUS.NOT_FOUND);
 
-    expect(body).toMatchObject({
+    expect(body).toEqual({
       status: HTTP_STATUS.NOT_FOUND,
       message: HTTP_ERROR_MESSAGE.NOT_FOUND,
       detail: [],

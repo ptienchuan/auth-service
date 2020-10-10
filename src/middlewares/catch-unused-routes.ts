@@ -1,8 +1,8 @@
-import Error from "@/libs/error";
+import ErrorResponse from "@/libs/error-response";
 import { HTTP_STATUS } from "@/constants";
 
 const catchUnusedRoutes = (): void => {
-  throw new Error(HTTP_STATUS.NOT_FOUND);
+  throw new ErrorResponse(HTTP_STATUS.NOT_FOUND);
 };
 
 export default catchUnusedRoutes;

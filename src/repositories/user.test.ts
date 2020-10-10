@@ -65,7 +65,7 @@ describe("User repository: ", () => {
     expect(user).toBeUndefined();
   });
 
-  test("generateTokenFor() - Should generate success", async () => {
+  test("generateTokenFor() - Should be generated success", async () => {
     const token = await userRepo.generateTokenFor(userFixture);
     const { authTokens } = await UserModel.findById(userFixture._id);
 

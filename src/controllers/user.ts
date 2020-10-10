@@ -11,12 +11,13 @@ const regist = async (req: Request, res: Response): Promise<Response> => {
     "expoToken",
   ]);
   const user = await userRepo.register(userParameter);
+  const token = await userRepo.generateTokenFor(user);
 
-  return res.status(HTTP_STATUS.CREATED).send(user);
+  return res.status(HTTP_STATUS.CREATED).send({ user, token });
 };
 
 const login = async (req: Request, res: Response): Promise<Response> => {
-  let token;
+  let token: string;
   const { name, password } = req.body;
   const logedInUser = await userRepo.findByCredentials(name, password);
   if (logedInUser) {

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import userRepo, { RegisterUserPatameter } from "@/repositories/user";
 import ErrorResponse from "@/libs/error-response";
 import { extractObject } from "@/libs/utilities";
-import { HTTP_STATUS } from "@/constants";
+import { HTTP_SUCCESS_STATUS, HTTP_FAIL_STATUS } from "@/constants";
 
 const regist = async (req: Request, res: Response): Promise<Response> => {
   const userParameter = extractObject(req.body as RegisterUserPatameter, [
@@ -13,7 +13,7 @@ const regist = async (req: Request, res: Response): Promise<Response> => {
   const user = await userRepo.register(userParameter);
   const token = await userRepo.generateTokenFor(user);
 
-  return res.status(HTTP_STATUS.CREATED).send({ user, token });
+  return res.status(HTTP_SUCCESS_STATUS.CREATED).send({ user, token });
 };
 
 const login = async (req: Request, res: Response): Promise<Response> => {
@@ -23,10 +23,10 @@ const login = async (req: Request, res: Response): Promise<Response> => {
   if (logedInUser) {
     token = await userRepo.generateTokenFor(logedInUser);
   } else {
-    throw new ErrorResponse(HTTP_STATUS.NOT_FOUND);
+    throw new ErrorResponse(HTTP_FAIL_STATUS.NOT_FOUND);
   }
 
-  return res.status(HTTP_STATUS.OK).send({ user: logedInUser, token });
+  return res.status(HTTP_SUCCESS_STATUS.OK).send({ user: logedInUser, token });
 };
 
 export default { regist, login };

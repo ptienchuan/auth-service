@@ -2,7 +2,11 @@ import request from "supertest";
 import faker from "faker";
 import app from "@/app";
 import UserModel, { User } from "@/models/user";
-import { HTTP_ERROR_MESSAGE, HTTP_STATUS } from "@/constants";
+import {
+  HTTP_ERROR_MESSAGE,
+  HTTP_SUCCESS_STATUS,
+  HTTP_FAIL_STATUS,
+} from "@/constants";
 
 describe("POST /users/login", () => {
   const userParameter = {
@@ -18,7 +22,7 @@ describe("POST /users/login", () => {
     const { body } = await request(app)
       .post("/users/login")
       .send(userParameter)
-      .expect(HTTP_STATUS.OK);
+      .expect(HTTP_SUCCESS_STATUS.OK);
 
     expect(body.user).toMatchObject({
       name: userParameter.name.trim().toLowerCase(),
@@ -32,11 +36,11 @@ describe("POST /users/login", () => {
     const { body } = await request(app)
       .post("/users/login")
       .send({ ...userParameter, password: "123" })
-      .expect(HTTP_STATUS.NOT_FOUND);
+      .expect(HTTP_FAIL_STATUS.NOT_FOUND);
 
     expect(body).toEqual({
-      status: HTTP_STATUS.NOT_FOUND,
-      message: HTTP_ERROR_MESSAGE.NOT_FOUND,
+      status: HTTP_FAIL_STATUS.NOT_FOUND,
+      message: HTTP_ERROR_MESSAGE[HTTP_FAIL_STATUS.NOT_FOUND],
       detail: [],
     });
   });
@@ -45,11 +49,11 @@ describe("POST /users/login", () => {
     const { body } = await request(app)
       .post("/users/login")
       .send({ ...userParameter, name: "123" })
-      .expect(HTTP_STATUS.NOT_FOUND);
+      .expect(HTTP_FAIL_STATUS.NOT_FOUND);
 
     expect(body).toEqual({
-      status: HTTP_STATUS.NOT_FOUND,
-      message: HTTP_ERROR_MESSAGE.NOT_FOUND,
+      status: HTTP_FAIL_STATUS.NOT_FOUND,
+      message: HTTP_ERROR_MESSAGE[HTTP_FAIL_STATUS.NOT_FOUND],
       detail: [],
     });
   });
@@ -61,11 +65,11 @@ describe("POST /users/login", () => {
     const { body } = await request(app)
       .post("/users/login")
       .send(userParameter)
-      .expect(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+      .expect(HTTP_FAIL_STATUS.INTERNAL_SERVER_ERROR);
 
     expect(body).toEqual({
-      status: HTTP_STATUS.INTERNAL_SERVER_ERROR,
-      message: HTTP_ERROR_MESSAGE.INTERNAL_SERVER_ERROR,
+      status: HTTP_FAIL_STATUS.INTERNAL_SERVER_ERROR,
+      message: HTTP_ERROR_MESSAGE[HTTP_FAIL_STATUS.INTERNAL_SERVER_ERROR],
       detail: [],
     });
   });

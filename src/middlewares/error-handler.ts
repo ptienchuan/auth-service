@@ -9,11 +9,13 @@ const errorHandler = (
   res: Response,
   next: NextFunction
 ): void => {
-  log(error);
-  const errorDetail =
-    error instanceof ErrorResponse
-      ? error.getErrorDetail()
-      : new ErrorResponse().getErrorDetail();
+  let errorDetail;
+  if (error instanceof ErrorResponse) {
+    errorDetail = error.getErrorDetail();
+  } else {
+    log("From error-handler: ", error);
+    errorDetail = new ErrorResponse().getErrorDetail();
+  }
 
   res.status(errorDetail.status).send(errorDetail);
 };

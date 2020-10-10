@@ -1,7 +1,11 @@
 import request from "supertest";
 import faker from "faker";
 import app from "@/app";
-import { HTTP_STATUS, HTTP_ERROR_MESSAGE } from "@/constants";
+import {
+  HTTP_SUCCESS_STATUS,
+  HTTP_FAIL_STATUS,
+  HTTP_ERROR_MESSAGE,
+} from "@/constants";
 import UserModel from "@/models/user";
 
 describe("POST /users/", () => {
@@ -15,7 +19,7 @@ describe("POST /users/", () => {
     const { body } = await request(app)
       .post("/users")
       .send({ ...parameters, expoToken })
-      .expect(HTTP_STATUS.CREATED);
+      .expect(HTTP_SUCCESS_STATUS.CREATED);
 
     expect(body.user).toEqual({
       name: parameters.name.trim().toLowerCase(),
@@ -29,7 +33,7 @@ describe("POST /users/", () => {
     const { body } = await request(app)
       .post("/users")
       .send(parameters)
-      .expect(HTTP_STATUS.CREATED);
+      .expect(HTTP_SUCCESS_STATUS.CREATED);
 
     expect(body.user).toEqual({
       name: parameters.name.trim().toLowerCase(),
@@ -46,11 +50,11 @@ describe("POST /users/", () => {
     const { body } = await request(app)
       .post("/users")
       .send(parameters)
-      .expect(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+      .expect(HTTP_FAIL_STATUS.INTERNAL_SERVER_ERROR);
 
     expect(body).toEqual({
-      status: HTTP_STATUS.INTERNAL_SERVER_ERROR,
-      message: HTTP_ERROR_MESSAGE.INTERNAL_SERVER_ERROR,
+      status: HTTP_FAIL_STATUS.INTERNAL_SERVER_ERROR,
+      message: HTTP_ERROR_MESSAGE[HTTP_FAIL_STATUS.INTERNAL_SERVER_ERROR],
       detail: [],
     });
   });

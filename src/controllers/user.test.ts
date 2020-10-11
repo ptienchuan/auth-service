@@ -62,7 +62,7 @@ describe("User Controller", () => {
     expect(authTokens[0].token).not.toBe("");
   });
 
-  test.only("Action login(): Should failed", async () => {
+  test("Action login(): Should failed", async () => {
     let req = httpMocks.createRequest({
       body: {
         name: `${userFixtureParameter.name}_diff`,

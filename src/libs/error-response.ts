@@ -1,30 +1,20 @@
-import { HTTP_STATUS, HTTP_ERROR_MESSAGE } from "@/constants";
+import { HTTP_FAIL_STATUS, HTTP_ERROR_MESSAGE } from "@/constants";
 
 interface ErrorDetail {
-  status: HTTP_STATUS;
+  status: HTTP_FAIL_STATUS;
   message: string;
   detail: [];
 }
 
 class ErrorResponse extends Error {
-  status: HTTP_STATUS;
+  status: HTTP_FAIL_STATUS;
   message: string;
   detail: [];
 
-  constructor(status?: HTTP_STATUS) {
+  constructor(status?: HTTP_FAIL_STATUS) {
     super();
-    this.status = status || HTTP_STATUS.INTERNAL_SERVER_ERROR;
-    switch (this.status) {
-      case HTTP_STATUS.NOT_FOUND:
-        this.message = HTTP_ERROR_MESSAGE.NOT_FOUND;
-        break;
-      case HTTP_STATUS.INTERNAL_SERVER_ERROR:
-        this.message = HTTP_ERROR_MESSAGE.INTERNAL_SERVER_ERROR;
-        break;
-      default:
-        this.message = "";
-        break;
-    }
+    this.status = status || HTTP_FAIL_STATUS.INTERNAL_SERVER_ERROR;
+    this.message = HTTP_ERROR_MESSAGE[this.status] || "";
   }
 
   getErrorDetail(): ErrorDetail {

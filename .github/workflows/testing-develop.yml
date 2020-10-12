@@ -1,0 +1,31 @@
+name: Testing Develop
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    container: node:latest
+
+    services:
+      mongo:
+        image: mongo
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+
+      - name: Running test
+        run: npm run test
+        env:
+          PORT: 3000
+          MONGO_URI: "mongodb://mongo:27017"
+          DB_NAME: "expo-notification"
+          SALT_ROUNDS: 1
+          JWT_PRIVATE_KEY: "jwt_private_key"

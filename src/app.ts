@@ -9,7 +9,10 @@ const app: Application = express();
 
 app.use(json());
 
-app.use("/users/", userRouter);
+// authentication not required
+app.use("/users/", userRouter.public);
+
+// authentication required
 app.use(auth, routes);
 
 app.all("*", () => catchUnusedRoutes());

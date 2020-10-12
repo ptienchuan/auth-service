@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import userRepo, { RegisterUserPatameter } from "@/repositories/user";
+import { User } from "@/models/user";
 import ErrorResponse from "@/libs/error-response";
 import { extractObject } from "@/libs/utilities";
 import { HTTP_SUCCESS_STATUS, HTTP_FAIL_STATUS } from "@/constants";
@@ -29,4 +30,23 @@ const login = async (req: Request, res: Response): Promise<Response> => {
   return res.status(HTTP_SUCCESS_STATUS.OK).send({ user: logedInUser, token });
 };
 
-export default { regist, login };
+const logout = async (req: Request, res: Response): Promise<Response> => {
+  const user = req.body.auth.user as User;
+  const token = req.body.auth.token as string;
+  user.authTokens = user.authTokens.filter(
+    (authToken) => authToken.token !== token
+  );
+  await user.save();
+
+  return res.sendStatus(HTTP_SUCCESS_STATUS.OK);
+};
+
+const logoutAll = async (req: Request, res: Response): Promise<Response> => {
+  const user = req.body.auth.user as User;
+  user.authTokens = [];
+  await user.save();
+
+  return res.sendStatus(HTTP_SUCCESS_STATUS.OK);
+};
+
+export default { regist, login, logout, logoutAll };

@@ -79,4 +79,60 @@ describe("User Controller", () => {
     });
     await expect(userController.login(req, res)).rejects.toThrowError();
   });
+
+  test("Action logout(): Should success", async () => {
+    userFixture.authTokens = [{ token: "token1" }, { token: "token2" }];
+    await userFixture.save();
+
+    const req = httpMocks.createRequest({
+      body: {
+        auth: {
+          user: userFixture,
+          token: "token1",
+        },
+      },
+    });
+    await userController.logout(req, res);
+
+    const { authTokens } = await UserModel.findById(userFixture._id);
+    expect(authTokens).toHaveLength(1);
+    expect(authTokens[0].token).toBe("token2");
+  });
+
+  test("Action logout(): Should not throw error when token not exist", async () => {
+    userFixture.authTokens = [{ token: "token1" }];
+    await userFixture.save();
+
+    const req = httpMocks.createRequest({
+      body: {
+        auth: {
+          user: userFixture,
+          token: "token2",
+        },
+      },
+    });
+    await userController.logout(req, res);
+
+    const { authTokens } = await UserModel.findById(userFixture._id);
+    expect(authTokens).toHaveLength(1);
+    expect(authTokens[0].token).toBe("token1");
+  });
+
+  test("Action logoutAll(): Should success", async () => {
+    userFixture.authTokens = [{ token: "token1" }, { token: "token2" }];
+    await userFixture.save();
+
+    const req = httpMocks.createRequest({
+      body: {
+        auth: {
+          user: userFixture,
+          token: "token1",
+        },
+      },
+    });
+    await userController.logoutAll(req, res);
+
+    const { authTokens } = await UserModel.findById(userFixture._id);
+    expect(authTokens).toHaveLength(0);
+  });
 });

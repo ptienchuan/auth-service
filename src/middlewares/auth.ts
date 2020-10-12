@@ -12,8 +12,10 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
       User
     >;
     const user = await UserModel.findOne({ _id });
-    const authTokens = user.authTokens.map(({ token }) => token.toString());
-    if (!authTokens.includes(token)) {
+    const isExistToken = user.authTokens.some(
+      (authToken) => authToken.token === token
+    );
+    if (!isExistToken) {
       throw new Error("Token was deleteted");
     }
 

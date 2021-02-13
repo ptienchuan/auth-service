@@ -7,7 +7,7 @@ describe("User Controller", () => {
   let userFixture: User;
   const res = httpMocks.createResponse();
   const userFixtureParameter = {
-    name: faker.random.word(),
+    email: faker.internet.email(),
     password: faker.random.words(2),
   } as User;
 
@@ -18,16 +18,16 @@ describe("User Controller", () => {
 
   test("Action regist(): Should succeed", async () => {
     const body = {
-      name: "username",
+      email: faker.internet.email(),
       password: faker.random.words(5),
       expoToken: faker.random.word(),
     };
     const req = httpMocks.createRequest({ body });
     await userController.regist(req, res);
-    const createdUser = await UserModel.findOne({ name: body.name });
+    const createdUser = await UserModel.findOne({ email: body.email });
 
     expect(createdUser).toMatchObject({
-      name: body.name.trim().toLowerCase(),
+      email: body.email.trim().toLowerCase(),
       expoToken: body.expoToken,
     });
     expect(createdUser.authTokens).toHaveLength(1);
@@ -50,7 +50,7 @@ describe("User Controller", () => {
   test("Action login(): Should succeed", async () => {
     const req = httpMocks.createRequest({
       body: {
-        name: userFixtureParameter.name,
+        email: userFixtureParameter.email,
         password: userFixtureParameter.password,
       },
     });
@@ -65,7 +65,7 @@ describe("User Controller", () => {
   test("Action login(): Should failed", async () => {
     let req = httpMocks.createRequest({
       body: {
-        name: `${userFixtureParameter.name}_diff`,
+        email: `diff_${userFixtureParameter.email}`,
         password: userFixtureParameter.password,
       },
     });
@@ -73,7 +73,7 @@ describe("User Controller", () => {
 
     req = httpMocks.createRequest({
       body: {
-        name: userFixtureParameter.name,
+        email: userFixtureParameter.email,
         password: `${userFixtureParameter.password}_diff`,
       },
     });

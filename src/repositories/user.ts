@@ -2,19 +2,15 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import UserModel, { User } from "@/models/user";
 
-interface RegisterUserPatameter {
-  name: string;
-  password: string;
-  expoToken?: string;
-}
+type RegisterUserPatameter = Pick<User, "email" | "password" | "expoToken">;
 
 const register = async ({
-  name,
+  email,
   password,
   expoToken,
 }: RegisterUserPatameter): Promise<User> => {
   const user = new UserModel({
-    name,
+    email,
     password,
     expoToken,
   } as User);
@@ -24,10 +20,10 @@ const register = async ({
 };
 
 const findByCredentials = async (
-  name: string,
+  email: string,
   password: string
 ): Promise<User | undefined> => {
-  const user = await UserModel.findOne({ name });
+  const user = await UserModel.findOne({ email });
   const validCredentials =
     user && (await bcrypt.compare(password, user.password));
 
@@ -36,7 +32,7 @@ const findByCredentials = async (
 
 const generateTokenFor = async (user: User): Promise<string> => {
   const token = jwt.sign(
-    { _id: user._id, name: user.name },
+    { _id: user._id, email: user.email },
     process.env.JWT_PRIVATE_KEY,
     { expiresIn: "24h" }
   );

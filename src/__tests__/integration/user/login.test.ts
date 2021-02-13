@@ -9,10 +9,10 @@ import {
 } from "@/constants";
 
 describe("POST /users/login", () => {
-  const userParameter = {
-    name: faker.random.word(),
+  const userParameter: Partial<User> = {
+    email: faker.internet.email(),
     password: faker.random.words(2),
-  } as User;
+  };
 
   beforeAll(async () => {
     await new UserModel(userParameter).save();
@@ -25,7 +25,7 @@ describe("POST /users/login", () => {
       .expect(HTTP_SUCCESS_STATUS.OK);
 
     expect(body.user).toMatchObject({
-      name: userParameter.name.trim().toLowerCase(),
+      email: userParameter.email.trim().toLowerCase(),
       expoToken: "",
     });
     expect(typeof body.token).toBe("string");
@@ -45,10 +45,10 @@ describe("POST /users/login", () => {
     });
   });
 
-  test("404 - Should failed because of invalid name", async () => {
+  test("404 - Should failed because of invalid email", async () => {
     const { body } = await request(app)
       .post("/users/login")
-      .send({ ...userParameter, name: "123" })
+      .send({ ...userParameter, email: "123" })
       .expect(HTTP_FAIL_STATUS.NOT_FOUND);
 
     expect(body).toEqual({

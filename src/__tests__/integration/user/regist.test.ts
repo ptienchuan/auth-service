@@ -10,7 +10,7 @@ import UserModel from "@/models/user";
 
 describe("POST /users/", () => {
   const parameters = {
-    name: faker.random.word(),
+    email: faker.internet.email(),
     password: faker.random.words(2),
   };
 
@@ -22,7 +22,7 @@ describe("POST /users/", () => {
       .expect(HTTP_SUCCESS_STATUS.CREATED);
 
     expect(body.user).toEqual({
-      name: parameters.name.trim().toLowerCase(),
+      email: parameters.email.trim().toLowerCase(),
       expoToken: expoToken,
     });
     expect(body).toHaveProperty("token");
@@ -36,7 +36,7 @@ describe("POST /users/", () => {
       .expect(HTTP_SUCCESS_STATUS.CREATED);
 
     expect(body.user).toEqual({
-      name: parameters.name.trim().toLowerCase(),
+      email: parameters.email.trim().toLowerCase(),
       expoToken: "",
     });
     expect(body).toHaveProperty("token");

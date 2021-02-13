@@ -7,7 +7,7 @@ import { HTTP_SUCCESS_STATUS, HTTP_FAIL_STATUS } from "@/constants";
 
 const regist = async (req: Request, res: Response): Promise<Response> => {
   const userParameter = extractObject(req.body as RegisterUserPatameter, [
-    "name",
+    "email",
     "password",
     "expoToken",
   ]);
@@ -19,8 +19,8 @@ const regist = async (req: Request, res: Response): Promise<Response> => {
 
 const login = async (req: Request, res: Response): Promise<Response> => {
   let token: string;
-  const { name, password } = req.body;
-  const logedInUser = await userRepo.findByCredentials(name, password);
+  const { email, password }: Pick<User, "email" | "password"> = req.body;
+  const logedInUser = await userRepo.findByCredentials(email, password);
   if (logedInUser) {
     token = await userRepo.generateTokenFor(logedInUser);
   } else {

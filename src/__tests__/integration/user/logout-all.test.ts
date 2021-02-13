@@ -11,7 +11,7 @@ import UserModel, { User } from "@/models/user";
 
 const generateToken = (user: User, expiresIn: string | number): string => {
   const token = jwt.sign(
-    { _id: user._id, name: user.name },
+    { _id: user._id, email: user.email },
     process.env.JWT_PRIVATE_KEY,
     { expiresIn }
   );
@@ -26,7 +26,7 @@ describe("POST /users/logout-all", () => {
 
   beforeEach(async () => {
     const userFixture = await new UserModel({
-      name: `${faker.random.word()}-${faker.random.number(1000)}`,
+      email: faker.internet.email(),
       password: faker.random.words(2),
     } as User).save();
 

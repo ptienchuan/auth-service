@@ -2,14 +2,14 @@ import { Document, Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
 interface User extends Document {
-  name: string;
+  email: string;
   password: string;
   expoToken?: string;
   authTokens?: { token: string }[];
 }
 
 const schema = new Schema({
-  name: {
+  email: {
     type: String,
     required: true,
     trim: true,

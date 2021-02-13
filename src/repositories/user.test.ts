@@ -9,14 +9,14 @@ describe("User repository: ", () => {
   beforeEach(async () => {
     await UserModel.deleteMany({});
     userFixture = await new UserModel({
-      name: faker.random.word(),
+      email: faker.internet.email(),
       password: rawPassword,
     } as User).save();
   });
 
   test("register() - Should succeed", async () => {
     const userParameter: RegisterUserPatameter = {
-      name: "  user_Name  ",
+      email: "  userName@localhost.com  ",
       password: faker.random.words(5),
       expoToken: faker.random.word(),
     };
@@ -24,7 +24,7 @@ describe("User repository: ", () => {
 
     const user = await UserModel.findById(createdUser._id);
     expect(user).toMatchObject({
-      name: "user_name",
+      email: "username@localhost.com",
       expoToken: userParameter.expoToken,
     });
     expect(user.authTokens).toHaveLength(0);
@@ -33,13 +33,13 @@ describe("User repository: ", () => {
 
   test("findByCredentials() - Should return a user", async () => {
     const user = await userRepo.findByCredentials(
-      userFixture.name,
+      userFixture.email,
       rawPassword
     );
 
     expect(user).toMatchObject({
       _id: userFixture._id,
-      name: userFixture.name.trim().toLowerCase(),
+      email: userFixture.email.trim().toLowerCase(),
       expoToken: "",
     });
     expect(user.authTokens).toHaveLength(0);
@@ -47,19 +47,19 @@ describe("User repository: ", () => {
 
   test("findByCredentials() - Should return undefined", async () => {
     let user = await userRepo.findByCredentials(
-      `${userFixture.name}-diff`,
+      `diff_${userFixture.email}`,
       rawPassword
     );
     expect(user).toBeUndefined();
 
     user = await userRepo.findByCredentials(
-      userFixture.name,
+      userFixture.email,
       userFixture.password
     );
     expect(user).toBeUndefined();
 
     user = await userRepo.findByCredentials(
-      `${userFixture.name}-diff`,
+      `diff_${userFixture.email}`,
       userFixture.password
     );
     expect(user).toBeUndefined();
